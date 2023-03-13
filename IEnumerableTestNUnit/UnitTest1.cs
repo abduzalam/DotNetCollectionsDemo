@@ -1,5 +1,5 @@
 using System.Collections;
-
+/// This is an NUnit Test project
 namespace IEnumerableTestNUnit
 {
     public class Tests
@@ -9,6 +9,9 @@ namespace IEnumerableTestNUnit
         {
         }
 
+        /// <summary>
+        /// This Example illustrates the Cast<T> from non-generic collection
+        /// </summary>
         [Test]
         public void Cast_Test()
         {
@@ -26,6 +29,9 @@ namespace IEnumerableTestNUnit
 
             Assert.That(primeQuery, Is.EqualTo(expected));
         }
+        /// <summary>
+        /// This Example illustrates the OfType<T> method from non-generic collection
+        /// </summary>
         [Test]
         public void OfType_Test()
         {
@@ -44,6 +50,43 @@ namespace IEnumerableTestNUnit
             var expected = new List<string> {"London","Paris","Mandrid","Berlin","Lisbon" };
 
             Assert.That(cityQuery, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void OfType_Get_EvenNums()
+        {
+            var cities = new ArrayList
+            {
+                "London",
+                "Paris",
+                "Mandrid",
+                "Berlin",
+                7,
+                "Lisbon",
+                2,
+                10,
+                9
+            };
+
+            var evens = cities.OfType<int>().Where(num => num % 2 == 0).Select(num=>num);
+
+            var expected = new List<int> { 2, 10, 8 };
+
+            Assert.That(evens, Is.EqualTo(expected));
+        }
+
+        //AsParallel Method
+        [Test]
+        public void AsParallel_Method()
+        {
+
+            var numbers = Enumerable.Range(0, 100);
+
+            var oddCounts = numbers.AsParallel().Count(x => x % 2 != 0);
+
+            var expected = 50;
+            Assert.That(oddCounts, Is.EqualTo(expected));
+           
         }
     }
 }
